@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Network Reporting Automation</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Network Reporting Automation</h1>
+    <form method="POST" action="/generate">
+      <div id="device-list">
+        <div class="device">
+          <input type="text" name="ip[]" placeholder="Device IP" required>
+          <input type="text" name="username[]" placeholder="Username" required>
+          <input type="password" name="password[]" placeholder="Password" required>
+        </div>
+      </div>
+      <button type="button" onclick="addDevice()">+ Add Device</button>
+      <button type="submit">Generate Report</button>
+    </form>
+
+    {% if success %}
+      <div class="result">
+        <h3>✅ Report Generated!</h3>
+        <p>Download your reports below:</p>
+        <a href="/download/{{ excel_file }}" class="btn">Download Excel</a>
+        <a href="/download/{{ pdf_file }}" class="btn">Download PDF</a>
+      </div>
+    {% endif %}
+  </div>
+
+  <script>
+    function addDevice() {
+      const div = document.createElement('div');
+      div.classList.add('device');
+      div.innerHTML = `
+        <input type="text" name="ip[]" placeholder="Device IP" required>
+        <input type="text" name="username[]" placeholder="Username" required>
+        <input type="password" name="password[]" placeholder="Password" required>
+      `;
+      document.getElementById('device-list').appendChild(div);
+    }
+  </script>
+</body>
+</html>

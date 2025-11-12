@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Network Reports Dashboard</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>📊 Network Reports Dashboard</h1>
+    <p>View and download previously generated reports.</p>
+    <a href="/" class="btn">← Back to Generate Reports</a>
+
+    {% if reports %}
+      <table>
+        <tr>
+          <th>Report Name</th>
+          <th>Type</th>
+          <th>Download</th>
+        </tr>
+        {% for file in reports %}
+          <tr>
+            <td>{{ file }}</td>
+            <td>{{ 'Excel' if file.endswith('.xlsx') else 'PDF' }}</td>
+            <td><a href="/download/{{ file }}" class="btn">Download</a></td>
+          </tr>
+        {% endfor %}
+      </table>
+    {% else %}
+      <p>No reports found yet.</p>
+    {% endif %}
+  </div>
+</body>
+</html>
