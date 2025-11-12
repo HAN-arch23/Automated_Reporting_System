@@ -67,6 +67,17 @@ def generate_report():
 @app.route('/download/<filename>')
 def download(filename):
     return send_from_directory(SAVE_DIR, filename, as_attachment=True)
+@app.route('/dashboard')
+def dashboard():
+    # List all reports in the save directory
+    files = os.listdir(SAVE_DIR)
+    # Filter to only Excel and PDF reports
+    reports = [f for f in files if f.endswith('.xlsx') or f.endswith('.pdf')]
+    reports.sort(reverse=True)  # Show latest first
+    return render_template('dashboard.html', reports=reports)
+import os
 
 if __name__ == '__main__':
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0', port=port, debug=True)
     app.run(debug=True)
